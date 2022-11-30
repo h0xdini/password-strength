@@ -74,18 +74,22 @@ const HomeScreen = () => {
 
     // there are 33 special characters in the ASCII encoding
     useEffect(() => {
-        if ((lowercase || uppercase) && !digit && !specialChar) {
-            setCrack(28**(password.length) / 2000000000)
-        } else if ((lowercase || uppercase) && digit && !specialChar) {
-            setCrack(38**(password.length) / 2000000000)
-        } else if ((lowercase || uppercase) && digit && specialChar) {
-            setCrack(71**(password.length) / 2000000000)
-        } else if (!(lowercase || uppercase) && digit && !specialChar) {
-            setCrack(10**(password.length) / 2000000000)
-        } else if (!(lowercase || uppercase) && digit && specialChar) {
-            setCrack(43**(password.length) / 2000000000)
-        } else if (!(lowercase || uppercase) && !digit && specialChar) {
-            setCrack(33**(password.length) / 2000000000)
+        if (password) {
+            if ((lowercase || uppercase) && !digit && !specialChar) {
+                setCrack(28**(password.length) / 2000000000)
+            } else if ((lowercase || uppercase) && digit && !specialChar) {
+                setCrack(38**(password.length) / 2000000000)
+            } else if ((lowercase || uppercase) && digit && specialChar) {
+                setCrack(71**(password.length) / 2000000000)
+            } else if (!(lowercase || uppercase) && digit && !specialChar) {
+                setCrack(10**(password.length) / 2000000000)
+            } else if (!(lowercase || uppercase) && digit && specialChar) {
+                setCrack(43**(password.length) / 2000000000)
+            } else if (!(lowercase || uppercase) && !digit && specialChar) {
+                setCrack(33**(password.length) / 2000000000)
+            }
+        } else {
+            setCrack(0)
         }
     }, [password, lowercase, uppercase, digit, specialChar])
 
