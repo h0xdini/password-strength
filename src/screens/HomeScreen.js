@@ -10,6 +10,8 @@ const HomeScreen = () => {
     const [specialChar, setSpecialChar] = useState(false)
     const [passLength, setPassLength] = useState(false)
 
+    const [crack, setCrack] = useState(0)
+
     const [notiType, setNotiType] = useState('null')
 
     useEffect(() => {
@@ -70,11 +72,29 @@ const HomeScreen = () => {
         }
     }, [password])
 
+    // there are 33 special characters in the ASCII encoding
+    useEffect(() => {
+        if ((lowercase || uppercase) && !digit && !specialChar) {
+            setCrack(28**(password.length) / 2000000000)
+        } else if ((lowercase || uppercase) && digit && !specialChar) {
+            setCrack(38**(password.length) / 2000000000)
+        } else if ((lowercase || uppercase) && digit && specialChar) {
+            setCrack(71**(password.length) / 2000000000)
+        } else if (!(lowercase || uppercase) && digit && !specialChar) {
+            setCrack(10**(password.length) / 2000000000)
+        } else if (!(lowercase || uppercase) && digit && specialChar) {
+            setCrack(43**(password.length) / 2000000000)
+        } else if (!(lowercase || uppercase) && !digit && specialChar) {
+            setCrack(33**(password.length) / 2000000000)
+        }
+    }, [password, lowercase, uppercase, digit, specialChar])
+
   return (
     <section className='main-page'>
         <div className={`main-page-content ${notiType}`}>
             <label htmlFor="pass">Password</label>
             <input type="text" id="pass" placeholder='Type in your password' value={password} onChange={(e) => setPassword(e.target.value)} />
+            <p className="crack">{crack > 0 && crack}{crack > 0 && ' seconds'}</p>
 
             <div className="checkers">
                 <span className="lower-case">
